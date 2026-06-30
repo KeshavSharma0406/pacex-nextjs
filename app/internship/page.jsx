@@ -1,36 +1,30 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Reveal, ScaleIn, SlideIn, Stagger, StaggerChild, TiltCard, Parallax, FloatingShape, Magnetic, TextReveal, Counter, ScrollProgress } from '@/components/Animations';
+import { motion } from 'framer-motion';
+import {
+  Reveal, ScaleIn, Stagger, StaggerChild, Magnetic,
+  TextReveal, TerminalStat, ScrollProgress,
+} from '@/components/Animations';
 
 export default function Internship() {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-
   const steps = [
-    { num: '01', title: 'Apply Online', desc: 'Fill a short form — your stream, college, and preferred domain. Under 5 minutes. No entrance test.' },
-    { num: '02', title: 'Orientation & Onboarding', desc: 'Meet your mentor, receive your project brief, and understand what success looks like.' },
+    { num: '01', title: 'Apply Online', desc: 'A short form — your stream, college, and preferred domain. Under 5 minutes, no entrance test.' },
+    { num: '02', title: 'Orientation & Onboarding', desc: 'Meet your mentor, receive your project brief, understand what success looks like.' },
     { num: '03', title: 'Work on Real Projects', desc: 'Contribute to live projects — not dummy tasks. Weekly mentor check-ins and real feedback.' },
-    { num: '04', title: 'Get Certified & Placed', desc: 'Receive a digitally verifiable certificate. Top performers get direct referrals to 200+ hiring partners.' },
+    { num: '04', title: 'Get Certified & Placed', desc: 'A digitally verifiable certificate. Top performers get direct referrals to hiring partners.' },
   ];
 
-  const benefits = [
-    { title: 'Industry-Led Mentorship', desc: 'Paired with a working professional who reviews your work every week.' },
-    { title: 'Verifiable Certificate', desc: 'Each certificate has a unique QR code recruiters can scan instantly.' },
-    { title: 'Live Project Experience', desc: 'Real briefs from real organizations. Concrete answers for interviews.' },
-    { title: 'Placement Support', desc: 'Resume review, mock interviews, direct referrals to 200+ hiring partners.' },
-    { title: 'Skill Certifications', desc: 'Domain-specific micro-certifications in Digital Marketing, Data Analysis, and more.' },
-    { title: 'Letter of Recommendation', desc: 'High performers receive a personalized LOR useful for higher education.' },
+  const programs = [
+    { name: 'CAPTURE', duration: '4 months', desc: 'On-the-job training from day one. Built for students entering the workforce for the first time.' },
+    { name: 'IMPACT', duration: '8 months', desc: 'Advanced acceleration for working professionals stuck in stagnant roles, ready to lead.' },
+    { name: 'IGNITE', duration: '6–8 months', desc: 'Entrepreneurship launchpad — idea validation, legal setup, finance, and execution.' },
   ];
 
   const domains = [
     'Web Development', 'Digital Marketing', 'AI & Data Analysis', 'Graphic Design & UI',
-    'Social Media', 'Business Dev', 'Content & SEO', 'HR & Talent',
-    'Finance', 'E-Commerce', 'Video Production', 'PR & Comms',
+    'Social Media', 'Business Development', 'Content & SEO', 'HR & Talent',
+    'Finance', 'E-Commerce', 'Video Production', 'PR & Communications',
   ];
 
   return (
@@ -38,186 +32,154 @@ export default function Internship() {
       <ScrollProgress />
 
       {/* Hero */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-        <FloatingShape className="top-[15%] right-[10%]" size={100} color="rgba(233,69,96,0.08)" duration={12} />
-        <FloatingShape className="bottom-[20%] left-[5%]" size={60} color="rgba(124,58,237,0.08)" duration={10} delay={3} />
-
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="wrap px-6 md:px-12 lg:px-20 pt-40 pb-20">
-          <div className="max-w-4xl">
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-xs font-mono text-accent tracking-[0.3em] uppercase">
-              Internship Program
-            </motion.span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mt-4 leading-[0.95]">
-              <TextReveal text="Real Work." delay={0.4} />
-              <br />
-              <span className="gradient-text-hover"><TextReveal text="Real Experience." delay={0.8} /></span>
-              <br />
-              <TextReveal text="Real Career." delay={1.2} />
-            </h1>
-
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.6, duration: 0.8 }} className="text-lg text-white/50 max-w-xl mt-8 mb-10 font-body leading-relaxed">
-              We bridge the gap between classroom learning and industry demands — giving students a structured internship that builds a career, not just a line on a resume.
-            </motion.p>
-
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.9 }} className="flex flex-wrap gap-4">
-              <Magnetic>
-                <Link href="https://forms.gle/Lyufwto7JJY8VqRz9" target="_blank" className="btn-primary" data-cursor-text="Apply">
-                  <span>Apply for Internship</span>
-                </Link>
-              </Magnetic>
-              <Magnetic>
-                <a href="#process" className="btn-outline" data-cursor-text="Learn">How It Works</a>
-              </Magnetic>
-            </motion.div>
-          </div>
+      <section className="min-h-[80vh] flex flex-col justify-center section-pad !pb-10">
+        <span className="micro-label mb-6">Internship Program</span>
+        <h1 className="font-display font-semibold text-[clamp(3rem,8vw,7rem)] leading-[0.95] max-w-4xl">
+          <span className="block"><TextReveal text="Real Work." delay={0.3} /></span>
+          <span className="block serif-italic font-normal"><TextReveal text="Real Experience." delay={0.7} /></span>
+          <span className="block"><TextReveal text="Real Career." delay={1.1} /></span>
+        </h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="max-w-xl mt-8 text-lg text-muted leading-relaxed"
+        >
+          We bridge the gap between classroom learning and industry demands — a structured
+          internship that builds a career, not just a line on a resume.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.8 }}
+          className="flex flex-wrap gap-4 mt-10"
+        >
+          <Magnetic>
+            <a
+              href="https://forms.gle/Lyufwto7JJY8VqRz9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              data-cursor-text="Apply"
+            >
+              Apply for Internship
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a href="#process" className="btn-outline" data-cursor-text="View">
+              How it works
+            </a>
+          </Magnetic>
         </motion.div>
       </section>
 
       {/* Stats */}
-      <section className="py-16 border-y border-white/5">
-        <div className="wrap px-6 md:px-12 lg:px-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { val: '35', suf: '+', label: 'College Partners' },
-              { val: '5000', suf: '+', label: 'Students Enrolled' },
-              { val: '87', suf: '%', label: 'Placement Rate' },
-              { val: '200', suf: '+', label: 'Hiring Partners' },
-            ].map((s, i) => (
-              <Reveal key={i} delay={i * 0.1}>
-                <div className="text-center">
-                  <p className="text-4xl md:text-5xl font-display font-bold gradient-text">
-                    <Counter target={s.val} suffix={s.suf} />
-                  </p>
-                  <p className="text-xs text-white/40 font-mono uppercase tracking-wider mt-2">{s.label}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
+      <section className="py-16 border-y border-line">
+        <Stagger className="wrap px-6 md:px-12 lg:px-[6vw] flex flex-wrap gap-12 md:gap-20" staggerDelay={0.1}>
+          {[
+            { value: '35+', label: 'College Partners' },
+            { value: '5000+', label: 'Students Enrolled' },
+            { value: '87%', label: 'Placement Rate' },
+            { value: '200+', label: 'Hiring Partners' },
+          ].map((s, i) => (
+            <StaggerChild key={i}>
+              <TerminalStat value={s.value} label={s.label} />
+            </StaggerChild>
+          ))}
+        </Stagger>
       </section>
 
       {/* Process */}
       <section id="process" className="section-pad">
-        <div className="wrap">
-          <Reveal>
-            <span className="text-xs font-mono text-accent tracking-[0.3em] uppercase">Process</span>
-            <h2 className="text-4xl md:text-6xl font-display font-bold mt-3 mb-16">
-              Application to certificate. <span className="gradient-text">Four steps.</span>
-            </h2>
-          </Reveal>
+        <Reveal>
+          <span className="micro-label">Process</span>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-display font-semibold mt-3 mb-16">
+            Application to certificate. <span className="serif-italic font-normal">Four steps.</span>
+          </h2>
+        </Reveal>
 
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-accent/50 via-purple/30 to-transparent" />
-
-            <div className="space-y-12">
-              {steps.map((step, i) => (
-                <Reveal key={i} delay={i * 0.1}>
-                  <motion.div
-                    whileHover={{ x: 12 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                    className="flex gap-8 items-start pl-4"
-                  >
-                    {/* Dot */}
-                    <div className="relative z-10 flex-shrink-0">
-                      <motion.div
-                        whileHover={{ scale: 1.3 }}
-                        className="w-8 h-8 rounded-full bg-gradient-to-r from-accent to-purple flex items-center justify-center"
-                      >
-                        <span className="text-xs font-mono font-bold">{step.num}</span>
-                      </motion.div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="glass rounded-xl p-8 flex-1 border border-white/5 hover:border-accent/20 transition-colors duration-500" data-cursor="pointer">
-                      <h3 className="text-xl font-display font-bold mb-2">{step.title}</h3>
-                      <p className="text-white/50 font-body leading-relaxed">{step.desc}</p>
-                    </div>
-                  </motion.div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+        <div className="border-t border-line">
+          {steps.map((s, i) => (
+            <Reveal key={i} delay={i * 0.08}>
+              <div className="flex flex-col md:flex-row gap-4 md:gap-12 py-10 border-b border-line">
+                <span className="font-mono text-sm text-muted md:w-16">{s.num}</span>
+                <h3 className="font-display font-semibold text-xl md:text-2xl md:w-80">{s.title}</h3>
+                <p className="text-muted leading-relaxed max-w-md">{s.desc}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* Benefits */}
-      <section className="section-pad relative overflow-hidden">
-        <Parallax speed={0.1} className="absolute top-0 right-0 w-[500px] h-[500px] -z-10">
-          <div className="w-full h-full rounded-full" style={{ background: 'radial-gradient(circle, rgba(233,69,96,0.05) 0%, transparent 70%)' }} />
-        </Parallax>
+      {/* Programs */}
+      <section className="section-pad !pt-0">
+        <Reveal>
+          <span className="micro-label">Programs</span>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-display font-semibold mt-3 mb-16">
+            Three paths. <span className="serif-italic font-normal">Pick yours.</span>
+          </h2>
+        </Reveal>
 
-        <div className="wrap">
-          <Reveal>
-            <span className="text-xs font-mono text-accent tracking-[0.3em] uppercase">What You Get</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-16">
-              More than a certificate. <span className="gradient-text">A career headstart.</span>
-            </h2>
-          </Reveal>
-
-          <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
-            {benefits.map((b, i) => (
-              <StaggerChild key={i}>
-                <TiltCard>
-                  <motion.div
-                    whileHover={{ y: -6 }}
-                    className="glass rounded-2xl p-8 h-full border border-white/5 hover:border-accent/20 transition-colors duration-500 group"
-                    data-cursor="pointer"
-                  >
-                    <span className="text-2xl font-mono text-accent/30 group-hover:text-accent transition-colors">◆</span>
-                    <h3 className="text-lg font-display font-bold mt-4 mb-2">{b.title}</h3>
-                    <p className="text-white/40 font-body text-sm leading-relaxed">{b.desc}</p>
-                  </motion.div>
-                </TiltCard>
-              </StaggerChild>
-            ))}
-          </Stagger>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border-t border-line">
+          {programs.map((p, i) => (
+            <motion.div
+              key={p.name}
+              whileHover={{ backgroundColor: 'rgba(243,241,234,0.02)' }}
+              className="bg-bg p-8 md:p-10"
+              data-cursor="pointer"
+            >
+              <div className="flex items-center justify-between mb-8">
+                <span className="stat-label">{String(i + 1).padStart(2, '0')}</span>
+                <span className="stat-label">{p.duration}</span>
+              </div>
+              <h3 className="text-2xl font-display font-semibold mb-4">{p.name}</h3>
+              <p className="text-muted text-sm leading-relaxed">{p.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* Domains */}
       <section className="section-pad">
-        <div className="wrap">
-          <Reveal>
-            <span className="text-xs font-mono text-accent tracking-[0.3em] uppercase">Domains</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-16">
-              12 domains. <span className="gradient-text">One goal: career-ready.</span>
-            </h2>
-          </Reveal>
+        <Reveal>
+          <span className="micro-label">Domains</span>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-display font-semibold mt-3 mb-16">
+            12 domains. <span className="serif-italic font-normal">One goal: career-ready.</span>
+          </h2>
+        </Reveal>
 
-          <Stagger className="flex flex-wrap gap-3" staggerDelay={0.05}>
-            {domains.map((d, i) => (
-              <StaggerChild key={i}>
-                <motion.span
-                  whileHover={{ scale: 1.08, y: -3 }}
-                  className="inline-block px-5 py-3 rounded-full glass text-sm font-body text-white/70 hover:text-white hover:border-accent/30 border border-white/5 transition-all duration-300"
-                  data-cursor="pointer"
-                >
-                  {d}
-                </motion.span>
-              </StaggerChild>
-            ))}
-          </Stagger>
-        </div>
+        <Stagger className="flex flex-wrap gap-3" staggerDelay={0.04}>
+          {domains.map((d, i) => (
+            <StaggerChild key={i}>
+              <span className="inline-block px-5 py-3 rounded-full border border-line text-sm text-fg/70 hover:text-fg hover:border-fg transition-all duration-300 cursor-default">
+                {d}
+              </span>
+            </StaggerChild>
+          ))}
+        </Stagger>
       </section>
 
       {/* CTA */}
-      <section className="section-pad">
-        <div className="wrap text-center">
-          <ScaleIn>
-            <h2 className="text-5xl md:text-7xl font-display font-bold mb-6">
-              Your first day at work <span className="gradient-text">starts here.</span>
-            </h2>
-            <p className="text-white/40 text-lg max-w-lg mx-auto mb-10 font-body">
-              Applications for the July 2026 batch are open now.
-            </p>
-            <Magnetic>
-              <Link href="https://forms.gle/Lyufwto7JJY8VqRz9" target="_blank" className="btn-primary text-lg" data-cursor-text="Apply">
-                <span>Apply Now</span>
-              </Link>
-            </Magnetic>
-          </ScaleIn>
-        </div>
+      <section className="section-pad min-h-[60vh] flex flex-col justify-center border-t border-line">
+        <ScaleIn>
+          <h2 className="text-[clamp(2.6rem,6vw,5rem)] font-display font-semibold leading-tight mb-8">
+            Your first day at work <span className="serif-italic font-normal">starts here.</span>
+          </h2>
+          <p className="text-muted text-lg max-w-md mb-10">
+            Applications for the July 2026 batch are open now.
+          </p>
+          <Magnetic>
+            <a
+              href="https://forms.gle/Lyufwto7JJY8VqRz9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              data-cursor-text="Apply"
+            >
+              Apply Now
+            </a>
+          </Magnetic>
+        </ScaleIn>
       </section>
     </>
   );

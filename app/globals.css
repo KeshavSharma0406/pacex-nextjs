@@ -4,179 +4,108 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── Reset ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
-}
-
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
+html { scroll-behavior: auto; }
 
 body {
-  background: #030303;
-  color: #fff;
+  background: #08080a;
+  color: #f3f1ea;
   font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 300;
   overflow-x: hidden;
   cursor: none;
 }
 
-a, button, input, select, textarea { cursor: none; }
+a { color: inherit; text-decoration: none; }
 
-/* ── Film Grain Overlay ── */
+@media (pointer: coarse) {
+  body { cursor: auto; }
+}
+
+::selection {
+  background: rgba(243, 241, 234, 0.15);
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(243, 241, 234, 0.2); }
+
+/* ── Grain overlay ── */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 9998;
   pointer-events: none;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── Custom Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #5b9eff, #ffb454);
-  border-radius: 3px;
-}
-
-/* ── Selection ── */
-::selection {
-  background: rgba(233, 69, 96, 0.3);
-  color: #fff;
-}
-
-/* ── Utility Classes ── */
 @layer components {
-  .gradient-text {
-    background: linear-gradient(135deg, #5b9eff, #ffb454, #5b9eff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .serif-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
   }
 
-  .gradient-text-hover {
-    background: linear-gradient(135deg, #5b9eff, #ffb454, #5b9eff);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradientShift 4s ease infinite;
+  .micro-label {
+    @apply font-mono text-[11px] tracking-[0.25em] uppercase text-muted;
+  }
+  .micro-label::before { content: '( '; }
+  .micro-label::after { content: ' )'; }
+
+  .tag-chip {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-mono text-muted border border-line whitespace-nowrap;
   }
 
-  .glass {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .glow-accent {
-    box-shadow:
-      0 0 20px rgba(233, 69, 96, 0.15),
-      0 0 60px rgba(233, 69, 96, 0.05);
-  }
-
-  .glow-purple {
-    box-shadow:
-      0 0 20px rgba(124, 58, 237, 0.15),
-      0 0 60px rgba(124, 58, 237, 0.05);
+  .stat-label {
+    @apply font-mono text-xs text-muted tracking-wide;
   }
 
   .btn-primary {
-    @apply relative inline-flex items-center justify-center px-8 py-4 font-display font-semibold text-black rounded-full overflow-hidden transition-all duration-500;
-    background: #fff;
+    @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-mono text-xs tracking-[0.1em] border border-fg transition-colors duration-500;
   }
-
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: #5b9eff;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+  .btn-primary:hover {
+    background: #f3f1ea;
+    color: #08080a;
   }
-
-  .btn-primary:hover::before { opacity: 1; }
-  .btn-primary span { position: relative; z-index: 1; }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-8 py-4 font-mono text-xs tracking-wider text-white/70 rounded-full border border-white/15 hover:border-accent hover:text-white transition-all duration-500;
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-full font-mono text-xs tracking-[0.1em] text-muted border border-line hover:border-fg hover:text-fg transition-all duration-500;
   }
 
   .section-pad {
-    @apply px-6 md:px-12 lg:px-20 py-32 md:py-44;
+    @apply px-6 md:px-12 lg:px-[6vw] py-32 md:py-44;
   }
 
   .wrap {
     @apply w-full max-w-7xl mx-auto;
   }
 
-  /* Tag chip — floating keyword */
-  .tag-chip {
-    @apply inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-mono text-white/40 border border-white/10 whitespace-nowrap;
+  /* Letter spine */
+  .spine-letter {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(243, 241, 234, 0.15);
   }
 
-  /* Terminal stat label */
-  .stat-label {
-    @apply font-mono text-xs text-white/30 tracking-wide;
+  /* Program / list rows */
+  .row-divider {
+    border-top: 1px solid rgba(243, 241, 234, 0.08);
   }
 
-  /* Parenthetical micro-label, Nudot-style */
-  .micro-label {
-    @apply font-mono text-xs text-white/35 tracking-wider;
-  }
-
-  .micro-label::before {
-    content: '( ';
-  }
-  .micro-label::after {
-    content: ' )';
+  /* Form inputs - underline only, no boxes */
+  .field-input {
+    @apply w-full bg-transparent border-b border-line pt-6 pb-3 text-fg font-body focus:border-fg focus:outline-none transition-colors duration-300;
   }
 }
 
-/* ── Gradient animation ── */
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* ── Magnetic button hover ── */
-.magnetic-wrap {
-  position: relative;
-  display: inline-flex;
-}
-
-/* ── Reduced motion ── */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* ── Mobile cursor fix ── */
-@media (pointer: coarse) {
-  body, a, button, input, select, textarea { cursor: auto !important; }
 }

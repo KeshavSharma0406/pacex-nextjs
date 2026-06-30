@@ -58,7 +58,7 @@ export default function Preloader() {
 
             <motion.div className="w-48 h-px bg-white/10 mt-8 overflow-hidden">
               <motion.div
-                className="h-full bg-accent"
+                className="h-full bg-fg"
                 style={{ width: `${progress}%` }}
               />
             </motion.div>

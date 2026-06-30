@@ -259,7 +259,7 @@ export function ScrollProgress() {
   return (
     <motion.div
       style={{ scaleX, transformOrigin: '0%' }}
-      className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent via-purple to-cyan z-[100]"
+      className="fixed top-0 left-0 right-0 h-px bg-fg/40 z-[100]"
     />
   );
 }
@@ -338,9 +338,9 @@ export function Marquee({ items, speed = 25, className = '' }) {
         {[...Array(2)].map((_, set) => (
           <div key={set} className="inline-flex items-center">
             {items.map((item, i) => (
-              <span key={i} className="inline-flex items-center font-mono text-sm text-white/40 tracking-wide">
+              <span key={i} className="inline-flex items-center font-mono text-sm text-fg/40 tracking-wide">
                 {item}
-                <span className="mx-6 text-accent/50">·</span>
+                <span className="mx-6 text-fg/30">·</span>
               </span>
             ))}
           </div>
@@ -364,7 +364,7 @@ export function LetterPin({ letter, eyebrow, title, desc, index, total }) {
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="col-span-4 md:col-span-3"
       >
-        <span className="font-serif italic text-[5rem] md:text-[9rem] leading-none text-white/[0.06] select-none">
+        <span className="font-serif italic text-[5rem] md:text-[9rem] leading-none text-fg/[0.06] select-none">
           {letter}
         </span>
       </motion.div>
@@ -381,7 +381,7 @@ export function LetterPin({ letter, eyebrow, title, desc, index, total }) {
           <span className="stat-label">{String(index).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
         </div>
         <h3 className="text-2xl md:text-4xl font-display font-bold mb-3">{title}</h3>
-        <p className="text-white/40 font-body max-w-lg leading-relaxed">{desc}</p>
+        <p className="text-fg/40 font-body max-w-lg leading-relaxed">{desc}</p>
       </motion.div>
     </div>
   );
@@ -394,10 +394,10 @@ export function TerminalStat({ value, label, className = '' }) {
 
   return (
     <div ref={ref} className={className}>
-      <p className="font-mono text-2xl md:text-3xl text-white mb-1">
+      <p className="font-mono text-2xl md:text-3xl text-fg mb-1">
         {value}
-        <span className="text-accent">_</span>
-        <span className="text-white/30">{label.toUpperCase().replace(/ /g, '_')}</span>
+        <span className="text-fg/50">_</span>
+        <span className="text-fg/30">{label.toUpperCase().replace(/ /g, '_')}</span>
       </p>
     </div>
   );
@@ -407,10 +407,10 @@ export function TerminalStat({ value, label, className = '' }) {
 export function SlideCounter({ current, total, className = '' }) {
   return (
     <div className={`flex items-center gap-3 font-mono text-sm ${className}`}>
-      <span className="text-white">⟪</span>
-      <span className="text-white">{String(current).padStart(2, '0')}</span>
-      <span className="text-white/30">// {String(total).padStart(2, '0')}</span>
-      <span className="text-white">⟫</span>
+      <span className="text-fg">⟪</span>
+      <span className="text-fg">{String(current).padStart(2, '0')}</span>
+      <span className="text-fg/30">// {String(total).padStart(2, '0')}</span>
+      <span className="text-fg">⟫</span>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { Reveal, Magnetic } from './Animations';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 mt-20">
+    <footer className="border-t border-line mt-20">
       <div className="wrap section-pad !py-20">
         {/* Big CTA */}
         <Reveal>
@@ -15,7 +15,7 @@ export default function Footer() {
             <h2 className="text-5xl md:text-7xl font-display font-bold mt-4 mb-6">
               <span className="font-serif italic font-normal">Break out</span> of the crowd.
             </h2>
-            <p className="text-white/40 text-lg mb-8 max-w-lg mx-auto font-body">
+            <p className="text-muted text-lg mb-8 max-w-lg mx-auto font-body">
               Join 5,000+ students already transforming their careers with PaceX.
             </p>
             <Magnetic>
@@ -31,11 +31,11 @@ export default function Footer() {
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-10"
+          className="h-px bg-gradient-to-r from-transparent via-line to-transparent mb-10"
           style={{ originX: 0.5 }}
         />
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-white/40 font-body">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted font-body">
           <p>© 2026 PaceX. All rights reserved.</p>
 
           <div className="flex gap-6">
@@ -43,7 +43,7 @@ export default function Footer() {
               <Link
                 key={label}
                 href={label === 'Home' ? '/' : `/${label.toLowerCase()}`}
-                className="hover:text-white transition-colors duration-300"
+                className="hover:text-fg transition-colors duration-300"
               >
                 {label}
               </Link>
@@ -61,7 +61,7 @@ export default function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-xs font-mono hover:border-accent hover:text-accent transition-all duration-300"
+                  className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-xs font-mono hover:border-fg hover:text-fg transition-all duration-300"
                   data-cursor-text={s.label}
                 >
                   {s.label}

@@ -1,20 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Magnetic } from './Animations';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const prev = scrollY.getPrevious();
-    setScrolled(latest > 50);
-    setHidden(latest > prev && latest > 200);
+    setHidden(latest > prev && latest > 200 && !open);
   });
 
   const links = [
@@ -27,110 +25,86 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        animate={{ y: hidden && !open ? -100 : 0 }}
+        animate={{ y: hidden ? -100 : 0 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-          scrolled ? 'py-3' : 'py-5'
-        }`}
+        className="fixed top-0 w-full z-50 py-7"
+        style={{ mixBlendMode: 'difference' }}
       >
-        <div className="wrap px-6 md:px-12 lg:px-20">
-          <div
-            className={`flex items-center justify-between rounded-full px-6 md:px-8 py-3 transition-all duration-500 ${
-              scrolled
-                ? 'glass-strong shadow-lg shadow-black/20'
-                : 'bg-transparent'
-            }`}
-          >
-            {/* Logo */}
+        <div className="wrap px-6 md:px-12 lg:px-[6vw] flex items-center justify-between">
+          <Magnetic strength={0.2}>
+            <Link href="/" data-cursor-text="Home">
+              <span className="font-serif italic text-xl text-fg">PaceX</span>
+            </Link>
+          </Magnetic>
+
+          <nav className="hidden md:flex items-center gap-9">
+            {links.map((link) => (
+              <Magnetic key={link.href} strength={0.15}>
+                <Link
+                  href={link.href}
+                  className="relative font-mono text-[11px] tracking-[0.15em] uppercase text-fg/70 hover:text-fg transition-colors duration-300 group"
+                  data-cursor-text="View"
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-fg transition-all duration-300 group-hover:w-full" />
+                </Link>
+              </Magnetic>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-6">
             <Magnetic strength={0.2}>
-              <Link href="/" className="flex items-center gap-2" data-cursor-text="Home">
-                <span className="text-xl font-display font-bold gradient-text-hover">
-                  PaceX
-                </span>
+              <Link
+                href="/internship"
+                className="hidden md:inline-flex px-5 py-2.5 rounded-full font-mono text-[11px] tracking-[0.15em] uppercase border border-fg text-fg"
+                data-cursor-text="Apply"
+              >
+                Apply
               </Link>
             </Magnetic>
 
-            {/* Desktop Links */}
-            <nav className="hidden md:flex items-center gap-1">
-              {links.map((link) => (
-                <Magnetic key={link.href} strength={0.15}>
-                  <Link
-                    href={link.href}
-                    className="relative px-4 py-2 text-sm text-white/60 hover:text-white transition-colors duration-300 font-mono tracking-wide group"
-                    data-cursor-text="View"
-                  >
-                    <span className="text-white/20 mr-1">{'//'}</span>
-                    {link.label.toUpperCase()}
-                    <motion.span
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] bg-accent rounded-full"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: '70%' }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </Link>
-                </Magnetic>
-              ))}
-            </nav>
-
-            {/* CTA + Burger */}
-            <div className="flex items-center gap-4">
-              <Magnetic strength={0.2}>
-                <Link
-                  href="/signup"
-                  className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono tracking-wider border border-white/15 text-white hover:bg-white hover:text-black transition-all duration-500"
-                  data-cursor-text="Join"
-                >
-                  GET_STARTED
-                </Link>
-              </Magnetic>
-
-              {/* Mobile menu toggle */}
-              <button
-                onClick={() => setOpen(!open)}
-                className="md:hidden relative w-10 h-10 flex items-center justify-center"
-                aria-label="Menu"
-              >
-                <div className="flex flex-col gap-1.5">
-                  <motion.span
-                    animate={open ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
-                    className="w-6 h-[1.5px] bg-white block origin-center"
-                  />
-                  <motion.span
-                    animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                    className="w-6 h-[1.5px] bg-white block"
-                  />
-                  <motion.span
-                    animate={open ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
-                    className="w-6 h-[1.5px] bg-white block origin-center"
-                  />
-                </div>
-              </button>
-            </div>
+            <button
+              onClick={() => setOpen(!open)}
+              className="md:hidden relative w-8 h-5"
+              aria-label="Menu"
+            >
+              <motion.span
+                animate={open ? { rotate: 45, y: 9 } : { rotate: 0, y: 0 }}
+                className="absolute left-0 top-0 w-8 h-px bg-fg"
+              />
+              <motion.span
+                animate={open ? { opacity: 0 } : { opacity: 1 }}
+                className="absolute left-0 top-1/2 w-8 h-px bg-fg"
+              />
+              <motion.span
+                animate={open ? { rotate: -45, y: -9 } : { rotate: 0, y: 0 }}
+                className="absolute left-0 bottom-0 w-8 h-px bg-fg"
+              />
+            </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Full-screen Menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ clipPath: 'circle(0% at calc(100% - 40px) 40px)' }}
-            animate={{ clipPath: 'circle(150% at calc(100% - 40px) 40px)' }}
-            exit={{ clipPath: 'circle(0% at calc(100% - 40px) 40px)' }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 bg-surface flex flex-col items-center justify-center gap-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-40 bg-bg flex flex-col items-center justify-center gap-8"
           >
             {links.map((link, i) => (
               <motion.div
                 key={link.href}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                transition={{ delay: 0.15 + i * 0.08, duration: 0.5 }}
               >
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="text-5xl font-display font-bold text-white hover:text-accent transition-colors"
+                  className="font-serif italic text-5xl text-fg"
                 >
                   {link.label}
                 </Link>
@@ -138,16 +112,16 @@ export default function Navbar() {
             ))}
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-              className="flex gap-4 mt-8"
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="flex gap-4 mt-6"
             >
               <Link href="/login" onClick={() => setOpen(false)} className="btn-outline">
                 Login
               </Link>
               <Link href="/signup" onClick={() => setOpen(false)} className="btn-primary">
-                <span>Sign Up</span>
+                Sign Up
               </Link>
             </motion.div>
           </motion.div>

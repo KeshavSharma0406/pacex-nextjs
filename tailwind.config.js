@@ -4,14 +4,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg: '#030303',
-        surface: '#0a0a0a',
-        accent: '#5b9eff',
-        accent2: '#ffb454',
-        purple: '#7c3aed',
-        cyan: '#22d3ee',
-        muted: 'rgba(255,255,255,0.45)',
-        line: 'rgba(255,255,255,0.08)',
+        bg: '#08080a',
+        surface: '#0c0c0e',
+        fg: '#f3f1ea',
+        muted: 'rgba(243,241,234,0.45)',
+        faint: 'rgba(243,241,234,0.15)',
+        line: 'rgba(243,241,234,0.08)',
       },
       fontFamily: {
         display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],

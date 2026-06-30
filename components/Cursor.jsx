@@ -101,9 +101,9 @@ export default function Cursor() {
 
           const alpha = p.life * 0.4;
           const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 8);
-          gradient.addColorStop(0, `rgba(233, 69, 96, ${alpha})`);
-          gradient.addColorStop(0.4, `rgba(124, 58, 237, ${alpha * 0.5})`);
-          gradient.addColorStop(1, 'rgba(124, 58, 237, 0)');
+          gradient.addColorStop(0, `rgba(243, 241, 234, ${alpha * 0.5})`);
+          gradient.addColorStop(0.4, `rgba(243, 241, 234, ${alpha * 0.15})`);
+          gradient.addColorStop(1, 'rgba(243, 241, 234, 0)');
 
           ctx.fillStyle = gradient;
           ctx.beginPath();
@@ -150,10 +150,10 @@ export default function Cursor() {
             width: hovered ? 80 : 40,
             height: hovered ? 80 : 40,
             borderColor: hovered
-              ? 'rgba(233, 69, 96, 0.8)'
+              ? 'rgba(243, 241, 234, 0.6)'
               : 'rgba(255, 255, 255, 0.3)',
             backgroundColor: hovered
-              ? 'rgba(233, 69, 96, 0.08)'
+              ? 'rgba(243, 241, 234, 0.06)'
               : 'transparent',
           }}
           transition={{ type: 'spring', damping: 20, stiffness: 300 }}
@@ -186,14 +186,14 @@ export default function Cursor() {
           animate={{
             width: clicked ? 6 : hovered ? 4 : 8,
             height: clicked ? 6 : hovered ? 4 : 8,
-            backgroundColor: hovered ? '#e94560' : '#ffffff',
+            backgroundColor: '#f3f1ea',
           }}
           transition={{ type: 'spring', damping: 30, stiffness: 500 }}
           className="rounded-full"
           style={{
             transform: 'translate(-50%, -50%)',
             boxShadow: hovered
-              ? '0 0 20px rgba(233, 69, 96, 0.6)'
+              ? '0 0 16px rgba(243, 241, 234, 0.4)'
               : '0 0 10px rgba(255, 255, 255, 0.3)',
           }}
         />
