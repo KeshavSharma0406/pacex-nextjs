@@ -56,14 +56,15 @@ export default function Navbar() {
                 <Magnetic key={link.href} strength={0.15}>
                   <Link
                     href={link.href}
-                    className="relative px-4 py-2 text-sm text-white/70 hover:text-white transition-colors duration-300 font-body group"
+                    className="relative px-4 py-2 text-sm text-white/60 hover:text-white transition-colors duration-300 font-mono tracking-wide group"
                     data-cursor-text="View"
                   >
-                    {link.label}
+                    <span className="text-white/20 mr-1">{'//'}</span>
+                    {link.label.toUpperCase()}
                     <motion.span
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] bg-accent rounded-full"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] bg-accent rounded-full"
                       initial={{ width: 0 }}
-                      whileHover={{ width: '60%' }}
+                      whileHover={{ width: '70%' }}
                       transition={{ duration: 0.3 }}
                     />
                   </Link>
@@ -76,10 +77,10 @@ export default function Navbar() {
               <Magnetic strength={0.2}>
                 <Link
                   href="/signup"
-                  className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-display font-semibold bg-white text-black hover:bg-accent hover:text-white transition-all duration-500"
+                  className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono tracking-wider border border-white/15 text-white hover:bg-white hover:text-black transition-all duration-500"
                   data-cursor-text="Join"
                 >
-                  Get Started
+                  GET_STARTED
                 </Link>
               </Magnetic>
 

@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Cursor from '@/components/Cursor';
 import SmoothScroll from '@/components/SmoothScroll';
+import Preloader from '@/components/Preloader';
 
 export const metadata = {
   title: 'PaceX — Where Excellence Meets Direction',
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <Preloader />
         <SmoothScroll>
           <Cursor />
           <Navbar />

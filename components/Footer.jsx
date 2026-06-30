@@ -11,10 +11,11 @@ export default function Footer() {
         {/* Big CTA */}
         <Reveal>
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-display font-bold mb-6">
-              Ready to <span className="gradient-text">break out?</span>
+            <span className="micro-label">Ready when you are</span>
+            <h2 className="text-5xl md:text-7xl font-display font-bold mt-4 mb-6">
+              <span className="font-serif italic font-normal">Break out</span> of the crowd.
             </h2>
-            <p className="text-white/50 text-lg mb-8 max-w-lg mx-auto font-body">
+            <p className="text-white/40 text-lg mb-8 max-w-lg mx-auto font-body">
               Join 5,000+ students already transforming their careers with PaceX.
             </p>
             <Magnetic>

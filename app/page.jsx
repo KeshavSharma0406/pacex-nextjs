@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   Reveal, ScaleIn, SlideIn, Stagger, StaggerChild,
-  Parallax, TiltCard, Magnetic, TextReveal, WordReveal,
-  FloatingShape, Counter, ScrollProgress,
+  Parallax, TiltCard, Magnetic, TextReveal,
+  FloatingTags, Marquee, LetterPin, TerminalStat, SlideCounter,
+  ScrollProgress,
 } from '@/components/Animations';
 
 export default function Home() {
@@ -15,26 +16,36 @@ export default function Home() {
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-
-  const heroY = useTransform(heroScroll, [0, 1], [0, -150]);
-  const heroScale = useTransform(heroScroll, [0, 1], [1, 0.9]);
+  const heroY = useTransform(heroScroll, [0, 1], [0, -100]);
   const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
-  const heroBlur = useTransform(heroScroll, [0, 1], [0, 10]);
 
-  const courses = [
-    { name: 'CAPTURE', duration: '4 months', desc: 'Career Advancement & Practical Training Under Real Experience. Build essential industry-ready skills with on-the-job training from day one.', gradient: 'from-blue-500/20 to-cyan-500/20', border: 'hover:border-cyan-500/30' },
-    { name: 'IMPACT', duration: '8 months', desc: 'Advanced career acceleration for working professionals stuck in stagnant roles. Leadership, strategic thinking, AI tools, and career transformation.', gradient: 'from-purple-500/20 to-pink-500/20', border: 'hover:border-purple-500/30' },
-    { name: 'IGNITE', duration: '6-8 months', desc: 'Entrepreneurship launchpad for aspiring founders. From idea validation to startup finance, legal setup, marketing, and digital execution.', gradient: 'from-orange-500/20 to-red-500/20', border: 'hover:border-orange-500/30' },
+  const [activeProgram, setActiveProgram] = useState(0);
+
+  const heroTags = [
+    { label: 'Mentorship', top: '15%', left: '8%', duration: 9 },
+    { label: 'Internships', top: '25%', right: '10%', duration: 11, delay: 1 },
+    { label: 'Certification', top: '65%', left: '5%', duration: 10, delay: 2 },
+    { label: 'Placement', top: '70%', right: '12%', duration: 8, delay: 0.5 },
+    { label: 'Real Projects', top: '45%', left: '2%', duration: 12, delay: 1.5 },
+    { label: 'Career Growth', top: '10%', left: '45%', duration: 9, delay: 2.5 },
+    { label: 'Industry Mentors', top: '80%', left: '40%', duration: 10, delay: 0.8 },
   ];
 
-  const features = [
-    { title: 'Practical Learning', desc: 'Business tools, communication, critical thinking, AI — what actually matters at work.', num: '01' },
-    { title: 'Day-One Experience', desc: 'Live industry exposure and on-the-job training from your very first month.', num: '02' },
-    { title: 'Real Mentors', desc: 'Entrepreneurs, managers, designers, coders — not textbook teachers.', num: '03' },
-    { title: 'Career Support', desc: 'Resume polishing, interview prep, and direct placement assistance.', num: '04' },
-    { title: 'Stage-Matched Programs', desc: 'Starting out, switching careers, or building your own — we meet you where you are.', num: '05' },
-    { title: 'Proven Results', desc: '5,000+ learners trained, hundreds of companies, careers transformed.', num: '06' },
+  const letters = [
+    { letter: 'P', eyebrow: 'Practical', title: 'Skills that work in the real world', desc: 'Business tools, communication, critical thinking, AI fluency — what actually matters once you walk into a job.' },
+    { letter: 'A', eyebrow: 'Authentic', title: 'Mentorship from people who\u2019ve done it', desc: 'Entrepreneurs, managers, designers, coders. Not textbook theory — lived industry experience.' },
+    { letter: 'C', eyebrow: 'Career-Ready', title: 'Outcomes over certificates', desc: 'Every program is built backward from what hiring managers actually screen for.' },
+    { letter: 'E', eyebrow: 'Experience', title: 'On-the-job training from day one', desc: 'Live projects, real briefs, real deadlines — your first day already looks like a real job.' },
+    { letter: 'X', eyebrow: 'eXcellence', title: 'A track record that speaks for itself', desc: '5,000+ learners trained, 87% placement rate, 200+ hiring partners across India.' },
   ];
+
+  const programs = [
+    { name: 'CAPTURE', duration: '4 months', desc: 'On-the-job training from day one. Built for students entering the workforce for the first time.' },
+    { name: 'IMPACT', duration: '8 months', desc: 'Advanced acceleration for working professionals stuck in stagnant roles, ready to lead.' },
+    { name: 'IGNITE', duration: '6–8 months', desc: 'Entrepreneurship launchpad — from idea validation to legal setup, finance, and execution.' },
+  ];
+
+  const tickerItems = ['INTERNSHIPS', 'MENTORSHIP', 'CERTIFICATION', 'PLACEMENT', 'REAL PROJECTS', 'CAREER GROWTH'];
 
   return (
     <>
@@ -42,287 +53,183 @@ export default function Home() {
 
       {/* ═══════ HERO ═══════ */}
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Animated mesh gradient background */}
-        <div className="absolute inset-0 -z-10">
-          <motion.div
-            className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(233,69,96,0.12) 0%, transparent 70%)' }}
-            animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.2, 1] }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute bottom-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%)' }}
-            animate={{ x: [0, -40, 0], y: [0, 40, 0], scale: [1, 1.15, 1] }}
-            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute top-[40%] left-[50%] w-[400px] h-[400px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%)' }}
-            animate={{ x: [0, 60, -30, 0], y: [0, -50, 20, 0] }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
-
-        {/* Floating 3D shapes */}
-        <FloatingShape className="top-[15%] left-[10%]" size={80} color="rgba(233,69,96,0.1)" duration={10} />
-        <FloatingShape className="top-[25%] right-[15%]" size={50} color="rgba(124,58,237,0.12)" duration={12} delay={2} />
-        <FloatingShape className="bottom-[20%] left-[20%]" size={40} color="rgba(34,211,238,0.1)" duration={8} delay={4} />
-        <FloatingShape className="bottom-[30%] right-[25%]" size={100} color="rgba(233,69,96,0.06)" duration={14} delay={1} />
-        <FloatingShape className="top-[60%] left-[60%]" size={30} color="rgba(124,58,237,0.08)" duration={9} delay={3} />
-
-        {/* Grid lines overlay */}
-        <div className="absolute inset-0 -z-10 opacity-[0.03]"
+        <div className="absolute inset-0 -z-10 opacity-[0.025]"
           style={{
             backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-            backgroundSize: '80px 80px',
+            backgroundSize: '64px 64px',
           }}
         />
 
+        <FloatingTags tags={heroTags} />
+
         <motion.div
-          style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
-          className="wrap px-6 md:px-12 lg:px-20 pt-32 pb-20 relative z-10"
+          style={{ y: heroY, opacity: heroOpacity }}
+          className="wrap px-6 md:px-12 lg:px-20 pt-32 pb-20 relative z-10 text-center"
         >
-          <div className="max-w-5xl">
-            {/* Eyebrow */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs font-mono text-white/60 tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                Where Excellence Meets Direction
-              </span>
-            </motion.div>
-
-            {/* Headline with character reveal */}
-            <h1 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-display font-bold leading-[0.95] tracking-tight mb-8">
-              <TextReveal text="Stuck in the" delay={0.4} />
-              <br />
-              <span className="gradient-text-hover">
-                <TextReveal text="Crowd?" delay={0.8} />
-              </span>
-              <br />
-              <TextReveal text="Time to" delay={1.1} />
-              {' '}
-              <span className="gradient-text-hover">
-                <TextReveal text="Break Out." delay={1.3} />
-              </span>
-            </h1>
-
-            {/* Subhead */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.6 }}
-              className="text-lg md:text-xl text-white/50 max-w-xl leading-relaxed mb-12 font-body"
-            >
-              90% of grads feel lost. 70% settle for jobs they don't love.
-              You're built for more. Get trained. Get paid. Get placed.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.9 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Magnetic>
-                <Link href="/internship" className="btn-primary" data-cursor-text="Apply">
-                  <span>Start Your Journey</span>
-                </Link>
-              </Magnetic>
-              <Magnetic>
-                <Link href="/about" className="btn-outline" data-cursor-text="Learn">
-                  Discover PaceX
-                </Link>
-              </Magnetic>
-            </motion.div>
-          </div>
-
-          {/* Scroll indicator */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.5 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-8"
           >
-            <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Scroll</span>
-            <motion.div
-              className="w-5 h-8 rounded-full border border-white/20 flex justify-center pt-1.5"
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <motion.div
-                className="w-1 h-1.5 rounded-full bg-accent"
-                animate={{ y: [0, 8, 0], opacity: [1, 0.3, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </motion.div>
+            <span className="micro-label">Career Readiness Platform</span>
+          </motion.div>
+
+          <h1 className="text-6xl sm:text-7xl lg:text-9xl font-display font-bold leading-[0.92] tracking-tight">
+            <TextReveal text="Stuck in the" delay={0.4} />
+            <br />
+            <span className="font-serif italic font-normal text-white/90">
+              <TextReveal text="crowd?" delay={0.8} />
+            </span>
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+            className="text-lg text-white/40 max-w-md mx-auto mt-8 mb-12 font-body leading-relaxed"
+          >
+            Get trained. Get paid. Get placed. 90% of grads feel lost — you don't have to be one of them.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.7 }}
+            className="flex flex-wrap gap-4 justify-center"
+          >
+            <Magnetic>
+              <Link href="/internship" className="btn-primary" data-cursor-text="Apply">
+                <span>Start Your Journey</span>
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link href="/about" className="btn-outline" data-cursor-text="Learn">
+                Discover PaceX
+              </Link>
+            </Magnetic>
           </motion.div>
         </motion.div>
-      </section>
 
-      {/* ═══════ STATS MARQUEE ═══════ */}
-      <section className="py-16 border-y border-white/5 overflow-hidden">
         <motion.div
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-          className="flex gap-16 whitespace-nowrap"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.3 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
         >
-          {[...Array(2)].map((_, set) => (
-            <div key={set} className="flex gap-16 items-center">
-              {[
-                { val: '5000', suffix: '+', label: 'Students Impacted' },
-                { val: '35', suffix: '+', label: 'College Partners' },
-                { val: '87', suffix: '%', label: 'Placement Rate' },
-                { val: '200', suffix: '+', label: 'Hiring Partners' },
-                { val: '12', suffix: '+', label: 'Internship Domains' },
-              ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-8">
-                  <div className="text-center">
-                    <p className="text-4xl md:text-5xl font-display font-bold gradient-text">
-                      <Counter target={stat.val} suffix={stat.suffix} />
-                    </p>
-                    <p className="text-xs text-white/40 font-mono uppercase tracking-wider mt-1">{stat.label}</p>
-                  </div>
-                  <span className="text-white/10 text-2xl">✦</span>
-                </div>
-              ))}
-            </div>
-          ))}
+          <span className="font-mono text-[10px] text-white/25 tracking-[0.3em]">SCROLL</span>
+          <motion.span
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-white/30 text-lg"
+          >
+            ↓
+          </motion.span>
         </motion.div>
       </section>
 
-      {/* ═══════ PROGRAMS ═══════ */}
-      <section className="section-pad">
+      {/* ═══════ MARQUEE ═══════ */}
+      <section className="py-8 border-y border-line">
+        <Marquee items={tickerItems} speed={22} />
+      </section>
+
+      {/* ═══════ LETTER SPINE — P·A·C·E·X ═══════ */}
+      <section className="section-pad !pb-0">
         <div className="wrap">
           <Reveal>
-            <span className="text-xs font-mono text-accent tracking-[0.3em] uppercase">Programs</span>
-            <h2 className="text-4xl md:text-6xl font-display font-bold mt-3 mb-4">
-              Three paths.{' '}
-              <span className="gradient-text">One goal.</span>
+            <span className="micro-label">What we stand for</span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold mt-3 mb-4">
+              Five letters. <span className="font-serif italic font-normal">One standard.</span>
             </h2>
-            <p className="text-white/40 text-lg max-w-xl font-body mb-16">
-              Career-ready. Every program is outcome-driven and industry-aligned.
-            </p>
           </Reveal>
+        </div>
 
-          <Stagger className="grid grid-cols-1 lg:grid-cols-3 gap-6" staggerDelay={0.15}>
-            {courses.map((c) => (
-              <StaggerChild key={c.name}>
-                <TiltCard>
-                  <motion.div
-                    whileHover={{ y: -8 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                    className={`relative glass rounded-2xl p-8 md:p-10 h-full border border-white/5 ${c.border} transition-colors duration-500 group overflow-hidden`}
-                    data-cursor="pointer"
-                    data-cursor-text="Explore"
-                  >
-                    {/* Gradient glow on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${c.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl`} />
+        <div className="wrap mt-12">
+          {letters.map((l, i) => (
+            <LetterPin
+              key={l.letter}
+              letter={l.letter}
+              eyebrow={l.eyebrow}
+              title={l.title}
+              desc={l.desc}
+              index={i + 1}
+              total={letters.length}
+            />
+          ))}
+        </div>
+      </section>
 
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-2xl font-display font-bold">{c.name}</h3>
-                        <span className="text-xs font-mono text-white/40 px-3 py-1 rounded-full border border-white/10">
-                          {c.duration}
-                        </span>
-                      </div>
-                      <p className="text-white/50 font-body leading-relaxed mb-8">{c.desc}</p>
-                      <motion.span
-                        className="inline-flex items-center gap-2 text-sm font-display text-accent"
-                        whileHover={{ x: 5 }}
-                      >
-                        Learn more
-                        <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
-                      </motion.span>
-                    </div>
-                  </motion.div>
-                </TiltCard>
+      {/* ═══════ TERMINAL STATS ═══════ */}
+      <section className="py-20 border-y border-line">
+        <div className="wrap px-6 md:px-12 lg:px-20">
+          <Stagger className="grid grid-cols-2 md:grid-cols-4 gap-8" staggerDelay={0.1}>
+            {[
+              { value: '5000+', label: 'Students Trained' },
+              { value: '87%', label: 'Placement Rate' },
+              { value: '35+', label: 'College Partners' },
+              { value: '2026', label: 'Established' },
+            ].map((s, i) => (
+              <StaggerChild key={i}>
+                <TerminalStat value={s.value} label={s.label} />
               </StaggerChild>
             ))}
           </Stagger>
         </div>
       </section>
 
-      {/* ═══════ WHY PACEX ═══════ */}
-      <section className="section-pad relative overflow-hidden">
-        {/* Parallax background accent */}
-        <Parallax speed={0.15} className="absolute top-0 right-0 w-[600px] h-[600px] -z-10">
-          <div className="w-full h-full rounded-full" style={{ background: 'radial-gradient(circle, rgba(233,69,96,0.06) 0%, transparent 70%)' }} />
-        </Parallax>
-
+      {/* ═══════ PROGRAMS SLIDER ═══════ */}
+      <section className="section-pad">
         <div className="wrap">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            {/* Left sticky heading */}
-            <SlideIn direction="left" className="lg:col-span-5 lg:sticky lg:top-32">
-              <span className="text-xs font-mono text-accent tracking-[0.3em] uppercase">Why PaceX</span>
-              <h2 className="text-4xl md:text-5xl font-display font-bold mt-3 mb-6 leading-tight">
-                Not your typical{' '}
-                <span className="gradient-text">training institute.</span>
-              </h2>
-              <p className="text-white/40 font-body leading-relaxed">
-                We're a team of educators, industry professionals, and career coaches who believe every individual deserves a fair chance at success.
-              </p>
-            </SlideIn>
-
-            {/* Right features */}
-            <div className="lg:col-span-7">
-              <Stagger className="space-y-4" staggerDelay={0.1}>
-                {features.map((f) => (
-                  <StaggerChild key={f.num}>
-                    <motion.div
-                      whileHover={{ x: 8 }}
-                      transition={{ type: 'spring', stiffness: 400 }}
-                      className="glass rounded-xl p-6 flex gap-6 items-start group hover:border-accent/20 transition-colors duration-500"
-                      data-cursor="pointer"
-                    >
-                      <span className="text-sm font-mono text-accent/50 group-hover:text-accent transition-colors pt-1">
-                        {f.num}
-                      </span>
-                      <div>
-                        <h4 className="font-display font-semibold text-lg mb-1 group-hover:text-accent transition-colors">{f.title}</h4>
-                        <p className="text-white/40 font-body text-sm leading-relaxed">{f.desc}</p>
-                      </div>
-                    </motion.div>
-                  </StaggerChild>
-                ))}
-              </Stagger>
+          <Reveal>
+            <div className="flex items-center justify-between flex-wrap gap-4 mb-16">
+              <div>
+                <span className="micro-label">Programs</span>
+                <h2 className="text-3xl md:text-5xl font-display font-bold mt-3">
+                  Three paths. <span className="font-serif italic font-normal">One goal.</span>
+                </h2>
+              </div>
+              <SlideCounter current={activeProgram + 1} total={programs.length} />
             </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-line">
+            {programs.map((p, i) => (
+              <motion.div
+                key={p.name}
+                onMouseEnter={() => setActiveProgram(i)}
+                whileHover={{ backgroundColor: 'rgba(255,255,255,0.02)' }}
+                className="bg-bg p-8 md:p-10 cursor-pointer group"
+                data-cursor="pointer"
+                data-cursor-text="View"
+              >
+                <div className="flex items-center justify-between mb-8">
+                  <span className="stat-label">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="stat-label">{p.duration}</span>
+                </div>
+                <h3 className="text-2xl font-display font-bold mb-4 group-hover:text-accent transition-colors duration-500">
+                  {p.name}
+                </h3>
+                <p className="text-white/40 font-body text-sm leading-relaxed">{p.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════ MARQUEE TEXT ═══════ */}
-      <section className="py-20 overflow-hidden border-y border-white/5">
-        <motion.div
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="flex whitespace-nowrap"
-        >
-          {[...Array(4)].map((_, i) => (
-            <span key={i} className="text-[8rem] md:text-[12rem] font-display font-bold text-white/[0.02] mx-8 select-none">
-              GET TRAINED • GET PAID • GET PLACED •
-            </span>
-          ))}
-        </motion.div>
-      </section>
+      {/* ═══════ CLOSING ═══════ */}
+      <section className="section-pad relative overflow-hidden">
+        <Parallax speed={0.1} className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] -z-10">
+          <div className="w-full h-full rounded-full" style={{ background: 'radial-gradient(circle, rgba(91,158,255,0.04) 0%, transparent 70%)' }} />
+        </Parallax>
 
-      {/* ═══════ LOCATION ═══════ */}
-      <section className="section-pad">
         <div className="wrap text-center">
           <ScaleIn>
-            <span className="text-xs font-mono text-accent tracking-[0.3em] uppercase">Location</span>
-            <h2 className="text-4xl md:text-6xl font-display font-bold mt-3 mb-4">
-              <span className="gradient-text">Jaipur,</span> Rajasthan
+            <span className="micro-label">Jaipur, Rajasthan</span>
+            <h2 className="text-5xl md:text-7xl font-display font-bold mt-4 mb-8">
+              We don't provide courses.
+              <br />
+              <span className="font-serif italic font-normal">We provide a launchpad.</span>
             </h2>
-            <p className="text-white/40 text-lg font-body max-w-lg mx-auto mb-8">
-              We just don't provide courses — we provide a launchpad.
-            </p>
             <Magnetic>
               <a href="mailto:contact@pacex.co.in" className="btn-outline" data-cursor-text="Email">
                 contact@pacex.co.in

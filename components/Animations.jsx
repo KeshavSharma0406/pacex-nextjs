@@ -297,7 +297,125 @@ export function FloatingShape({
   );
 }
 
-/* ─── Horizontal scroll-triggered counter ─── */
+/* ─── Floating tag cloud — words drifting around a focal point ─── */
+export function FloatingTags({ tags, className = '' }) {
+  return (
+    <div className={`absolute inset-0 pointer-events-none ${className}`}>
+      {tags.map((tag, i) => (
+        <motion.span
+          key={i}
+          className="tag-chip absolute"
+          style={{ top: tag.top, left: tag.left, right: tag.right, bottom: tag.bottom }}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: [0, 0.8, 0.8, 0],
+            y: [0, -16, -8, -24],
+            x: [0, 8, -4, 6],
+          }}
+          transition={{
+            duration: tag.duration || 10,
+            delay: tag.delay || 0,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        >
+          {tag.label}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Infinite marquee ticker ─── */
+export function Marquee({ items, speed = 25, className = '' }) {
+  return (
+    <div className={`overflow-hidden whitespace-nowrap ${className}`}>
+      <motion.div
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
+        className="inline-flex"
+      >
+        {[...Array(2)].map((_, set) => (
+          <div key={set} className="inline-flex items-center">
+            {items.map((item, i) => (
+              <span key={i} className="inline-flex items-center font-mono text-sm text-white/40 tracking-wide">
+                {item}
+                <span className="mx-6 text-accent/50">·</span>
+              </span>
+            ))}
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─── Letter-pinned spine section (Nudot N-U-D-O-T style) ─── */
+export function LetterPin({ letter, eyebrow, title, desc, index, total }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <div ref={ref} className="relative grid grid-cols-12 gap-6 items-center py-16 md:py-24 border-b border-line last:border-b-0">
+      {/* Giant letter */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="col-span-4 md:col-span-3"
+      >
+        <span className="font-serif italic text-[5rem] md:text-[9rem] leading-none text-white/[0.06] select-none">
+          {letter}
+        </span>
+      </motion.div>
+
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={inView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        className="col-span-8 md:col-span-9"
+      >
+        <div className="flex items-center gap-4 mb-3">
+          <span className="micro-label">{eyebrow}</span>
+          <span className="stat-label">{String(index).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+        </div>
+        <h3 className="text-2xl md:text-4xl font-display font-bold mb-3">{title}</h3>
+        <p className="text-white/40 font-body max-w-lg leading-relaxed">{desc}</p>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─── Terminal-style stat ─── */
+export function TerminalStat({ value, label, className = '' }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+
+  return (
+    <div ref={ref} className={className}>
+      <p className="font-mono text-2xl md:text-3xl text-white mb-1">
+        {value}
+        <span className="text-accent">_</span>
+        <span className="text-white/30">{label.toUpperCase().replace(/ /g, '_')}</span>
+      </p>
+    </div>
+  );
+}
+
+/* ─── Slide counter (01 // 05 style) ─── */
+export function SlideCounter({ current, total, className = '' }) {
+  return (
+    <div className={`flex items-center gap-3 font-mono text-sm ${className}`}>
+      <span className="text-white">⟪</span>
+      <span className="text-white">{String(current).padStart(2, '0')}</span>
+      <span className="text-white/30">// {String(total).padStart(2, '0')}</span>
+      <span className="text-white">⟫</span>
+    </div>
+  );
+}
+
+
 export function Counter({ target, suffix = '', className = '' }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });

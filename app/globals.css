@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,7 +24,7 @@ html.lenis, html.lenis body {
 }
 
 body {
-  background: #050505;
+  background: #030303;
   color: #fff;
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
@@ -49,7 +49,7 @@ body::after {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #e94560, #7c3aed);
+  background: linear-gradient(to bottom, #5b9eff, #ffb454);
   border-radius: 3px;
 }
 
@@ -62,14 +62,14 @@ body::after {
 /* ── Utility Classes ── */
 @layer components {
   .gradient-text {
-    background: linear-gradient(135deg, #e94560, #7c3aed, #22d3ee);
+    background: linear-gradient(135deg, #5b9eff, #ffb454, #5b9eff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .gradient-text-hover {
-    background: linear-gradient(135deg, #e94560, #7c3aed, #22d3ee);
+    background: linear-gradient(135deg, #5b9eff, #ffb454, #5b9eff);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -104,15 +104,15 @@ body::after {
   }
 
   .btn-primary {
-    @apply relative inline-flex items-center justify-center px-8 py-4 font-display font-semibold text-white rounded-full overflow-hidden transition-all duration-500;
-    background: linear-gradient(135deg, #e94560, #7c3aed);
+    @apply relative inline-flex items-center justify-center px-8 py-4 font-display font-semibold text-black rounded-full overflow-hidden transition-all duration-500;
+    background: #fff;
   }
 
   .btn-primary::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #7c3aed, #22d3ee);
+    background: #5b9eff;
     opacity: 0;
     transition: opacity 0.5s ease;
   }
@@ -121,7 +121,7 @@ body::after {
   .btn-primary span { position: relative; z-index: 1; }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-8 py-4 font-display font-semibold text-white rounded-full border border-white/20 hover:border-accent hover:text-accent transition-all duration-500;
+    @apply inline-flex items-center justify-center px-8 py-4 font-mono text-xs tracking-wider text-white/70 rounded-full border border-white/15 hover:border-accent hover:text-white transition-all duration-500;
   }
 
   .section-pad {
@@ -130,6 +130,28 @@ body::after {
 
   .wrap {
     @apply w-full max-w-7xl mx-auto;
+  }
+
+  /* Tag chip — floating keyword */
+  .tag-chip {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-mono text-white/40 border border-white/10 whitespace-nowrap;
+  }
+
+  /* Terminal stat label */
+  .stat-label {
+    @apply font-mono text-xs text-white/30 tracking-wide;
+  }
+
+  /* Parenthetical micro-label, Nudot-style */
+  .micro-label {
+    @apply font-mono text-xs text-white/35 tracking-wider;
+  }
+
+  .micro-label::before {
+    content: '( ';
+  }
+  .micro-label::after {
+    content: ' )';
   }
 }
 
